@@ -1,0 +1,16 @@
+<span>
+    <figure>
+        <img (click)="startFabrication()" [attr.src]="server+product.logo" class='imgProduit'/>
+        <figcaption id="qte">{{product.quantite}}</figcaption>
+    </figure>
+
+    <span id="cout"> Coût : {{product.cout}} </span>
+    <span id="vitesse"> 
+        <mat-progress-bar class="progressbar" [value]="progressbarvalue"></mat-progress-bar>
+        Vitesse de production : {{product.vitesse}} ms
+    </span>
+   
+    <button (click)="buy()" [disabled]="this.money < this.product.cout">
+            Buy {{_qtmulti}} products
+    </button>
+</span> 

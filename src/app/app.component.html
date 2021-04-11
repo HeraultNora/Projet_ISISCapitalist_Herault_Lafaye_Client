@@ -1,0 +1,82 @@
+<div class="header">
+    <div>
+        <span>
+            <img [attr.src]="server+world.logo" id='imgMonde'/>
+        </span>
+        <span id="worldname"> {{world.name}} </span>
+    </div>
+
+    <div> 
+        $ <span [innerHTML]="world.money | bigvalue"> </span>
+    </div>
+    <div> <button id='qteAchat' (click)="setMulti()">Buy x {{qtmulti}}</button></div>
+    <div> 
+        Your id : <input type="text" [(ngModel)]="username" change="onUsernameChanged()"/>
+        <!-- -->
+    </div>
+</div> <br>
+<div class="main">
+    <div class="bouton">
+        <button id='unlocks'>Unlocks</button> <br>
+        <button id='cashUpgrades'>Cash Upgrades</button> <br>
+        <button id='angelUpgrade'>Angel Upgrades</button> <br>
+        <button mat-raised-button color="primary" [matBadge]="badgeManager" [matBadgeHidden]="badgeManager==0" (click)="showManagers = true"> 
+            Managers 
+        </button> <br>
+        <button id='investors'>Investors</button> <br>
+    </div>
+    <div class="product">  
+        
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[0]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[1]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[2]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[3]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[4]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>
+        <div> 
+            <app-product (notifyProduction)="onProductionDone($event)" (notifyAchat)="onBuyDone($event)" [qtmultit]="qtmulti" [prod]="world.products.product[5]" [moneyJoueur]="world.money" class="product col-md-6"></app-product>
+        </div>         
+    </div>
+
+
+    <div *ngIf="showManagers" class="modal"> 
+        <div>
+            <h1 class="title">Managers make you feel better !</h1>
+        </div> 
+        <div> 
+            <div *ngFor="let manager of world.managers.pallier"> 
+                <div *ngIf="!manager.unlocked" class="managerslayout"> 
+                    <div> 
+                        <div class="logo">
+                            <img class="round" [attr.src]="server+manager.logo" /> 
+                        </div> 
+                    </div> 
+                    <div> 
+                        <div class="managername"> 
+                            {{ manager.name}} 
+                        </div> 
+                        <div class="managercible"> 
+                            {{ world.products.product[manager.idcible-1].name }} 
+                        </div> 
+                        <div class="managercost"> 
+                            {{ manager.seuil}} 
+                        </div> 
+                    </div> 
+                    <div> 
+                        <button class="hirebutton" (click)="hireManager(manager)" [disabled]="world.money < manager.seuil" [ngClass]="{'selectable' : (world.money >= manager.seuil)}">Hire !</button>
+                    </div> 
+                </div> 
+            </div>
+            <button class="closebutton" mat-raised-button color="primary" (click)="showManagers = !showManagers">Close</button> 
+        </div> 
+    </div>
+</div>
